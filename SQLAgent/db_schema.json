@@ -1,0 +1,3 @@
+{
+  "table_info": "\nCREATE TABLE employee_payroll_data (\n\t`SNO` BIGINT, \n\t`Emp_ID` BIGINT, \n\t`Employee_Name` TEXT, \n\t`Fathers_Name` TEXT, \n\t`Department` TEXT, \n\t`Designation` TEXT, \n\t`Pay_Days` DOUBLE, \n\t`Present_Days` DOUBLE, \n\t`BASIC` TEXT, \n\t`HRA` TEXT, \n\t`CONVEYANCE` DOUBLE, \n\t`CCA` TEXT, \n\t`OTHER_EARN` TEXT, \n\t`PHLISAMT` TEXT, \n\t`R_F_PHEC` DOUBLE, \n\t`NS_ALLOW` TEXT, \n\t`SPL_ALLOW` TEXT, \n\t`EXTRA_DUTY` TEXT, \n\t`ARREARS` TEXT, \n\t`Total_Earning` TEXT, \n\t`PF` DOUBLE, \n\t`ESI` DOUBLE, \n\t`PT` DOUBLE, \n\t`TDS` TEXT, \n\t`MOBILE_DED` TEXT, \n\t`PEHC_DED` DOUBLE, \n\t`OTHER_DED` TEXT, \n\t`Total_Dedn` TEXT, \n\t`Net_Amount` TEXT\n)COLLATE utf8mb4_0900_ai_ci DEFAULT CHARSET=utf8mb4 ENGINE=InnoDB"
+}
