@@ -55,11 +55,14 @@ agent = create_agent(
     #debug=True,
     system_prompt="You are a helpful assistant. you should provide answers using given tools only. Be concise and accurate."
 )
+chat_history: list = []
 
 # ----- Interactive loop -----
-def run_repl(user_input):
-    print("Agent ready. Type your question and press Enter.")
-    print("Type 'exit' or 'quit' to stop.\n")
+def run_repl(user_input,chat_history):
+    #print("Agent ready. Type your question and press Enter.")
+    #print("Type 'exit' or 'quit' to stop.\n")
+    if not user_input:
+        return "", chat_history
 
     try:
         while True:
@@ -69,23 +72,26 @@ def run_repl(user_input):
                 print("Exiting. Bye!")
                 break
 
-            # invoke the agent with the user's message
+            chat_history.append(HumanMessage(content=user_input))
+            chat_history = chat_history[-10:]  # Limit to last 10 messages
             try:
-                result = agent.invoke({"messages": [HumanMessage(user_input)]})
+                result = agent.invoke({"messages": chat_history})
+                messages = result.get("messages", [])
+                if messages:
+                    chat_history.append(messages[-1])  # Append the AI response message
+                    chat_history = chat_history[-10:]  # Ensure limit after append
+                else:
+                    return "[No response returned by the agent]", chat_history
             except Exception as e:
-                # handle runtime/LLM/tool errors gracefully
-                print(f"[Error invoking agent] {e}")
-                continue
+                return f"[Error invoking agent] {e}", chat_history
 
-            # extract and print the assistant reply (same approach you used)
             messages = result.get("messages", [])
             if not messages:
-                print("[No response returned by the agent]")
-                continue
+                return "[No response returned by the agent]", chat_history
 
             final_message = messages[-1]
             ai_response_content = getattr(final_message, "content", str(final_message))
-            return ai_response_content
+            return ai_response_content, chat_history
 
     except KeyboardInterrupt:
         print("\nInterrupted. Exiting.")
