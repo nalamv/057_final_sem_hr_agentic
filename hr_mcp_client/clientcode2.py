@@ -44,9 +44,12 @@ class MCPClient:
     def __init__(self, llm_wrapper: LLMInterface):
         self.llm = llm_wrapper.get_model()
         # Ensure 'mcp.py' exists in your directory
+        PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+        tools_path = "src/mcp/mcp_server_employee_tools.py"
+        _tools_path = os.path.join(PROJECT_ROOT, tools_path)
         self.server_params = StdioServerParameters(
             command="python",
-            args=["C:/Users/yugan/Desktop/VNIT Mtech/GDrive/SEM-3/NLP/FinalSubmission/Team14_NLP_Project/src/mcp/mcp_server_employee_tools.py"],
+            args=[_tools_path],
         )
 
     async def _get_tools_from_server(self, session):

@@ -5,10 +5,11 @@ import os
 
 from src.constants import POLICY_PROMPT
 
-
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 def do_the_similarity_search(query):
     print("--- Triggered Policy Agent  ---")
-    PERSIST_DIR = "C:/Users/yugan/Desktop/VNIT Mtech/GDrive/SEM-3/NLP/FinalProject/src/local_chroma_db"
+    collection_dir = "src/local_chroma_db"
+    PERSIST_DIR = os.path.join(PROJECT_ROOT, collection_dir)
     print(PERSIST_DIR)
     collection_names = ["HR_Policy_data"]
     all_relevant_docs = []
@@ -27,6 +28,8 @@ def do_the_similarity_search(query):
 
         loaded_chromadb.as_retriever(search_type="similarity_score_threshold",search_kwargs={'score_threshold': 0.7}) # Only docs with > 70% similarity
         docs = loaded_chromadb.similarity_search(query)
+        print(f'Query:{query}')
+        print(f'Collection: {eachCollection}: {docs}')
 
         if not docs:
             response = "I'm sorry, no relevant information was found in the database."
@@ -43,6 +46,7 @@ def policy_agent001(query):
         print(llm.model_name)
         context=do_the_similarity_search(query)
         prompt=POLICY_PROMPT.format(query=query,context=context)
+        print(f'Input Prompt: {prompt}')
         response = llm.invoke([prompt])
         return response
     except Exception as e:

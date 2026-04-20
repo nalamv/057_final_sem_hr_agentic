@@ -5,12 +5,15 @@ import os
 
 from src.constants import POLICY_PROMPT
 
-
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+relative_pdf_path = "testdata/data/pdf/Hospital_Employee_Tax_Benefits.pdf"
+file_pdf = os.path.join(PROJECT_ROOT, relative_pdf_path)
 def do_the_similarity_search(query):
     print("--- Triggered Holiday Agent  ---")
-    PERSIST_DIR = "C:/Users/yugan/Desktop/VNIT Mtech/GDrive/SEM-3/NLP/FinalProject/src/local_chroma_db"
-    #print(PERSIST_DIR)
-    collection_names = "Employee_Holiday_Info"
+    collection_dir = "src/local_chroma_db"
+    PERSIST_DIR = os.path.join(PROJECT_ROOT, collection_dir)
+    print(PERSIST_DIR)
+    collection_name = "Holidays_2026"
     all_relevant_docs = []
 
     embeddings_model = HuggingFaceEmbeddings(
@@ -22,11 +25,13 @@ def do_the_similarity_search(query):
     loaded_chromadb = Chroma(
         persist_directory=PERSIST_DIR,
         embedding_function=embeddings_model,
-        collection_name=collection_names
+        collection_name=collection_name
     )
 
     loaded_chromadb.as_retriever(search_type="similarity_score_threshold",search_kwargs={'score_threshold': 0.7}) # Only docs with > 70% similarity
     docs = loaded_chromadb.similarity_search(query)
+    print(f'Query:{query}')
+    print(f'Collection: {collection_name}: {docs}')
 
     if not docs:
         response = "I'm sorry, no relevant information was found in the database."
@@ -47,9 +52,8 @@ def holiday_agent001(query):
         print(e)
         return f"Exception Occurred in Policy Agent. {e}"
 
-#object_name=AGENT001()
-#response=policy_agent001("How many days for Privilege Leave")
-#print(response.content)
+# response=holiday_agent001("what are the june holidays")
+# print(response.content)
 
 
 

@@ -6,7 +6,7 @@ PERSIST_DIR="./local_chroma_db"
 
 
 
-collection_name="HR_Policy_data"
+collection_name="Employee_Tax_benefits"
 client=chromadb.PersistentClient(path="./local_chroma_db")
 collection=client.get_collection(name=collection_name)
 
