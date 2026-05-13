@@ -38,10 +38,11 @@ def create_llm():
     return llm
 
 def create_agent():
+    print(PAYROLL_PROMPT)
     agent_executor = create_sql_agent(
         llm=create_llm(),
         db=create_db_mysql(),
-        verbose=False,
+        verbose=True,
         agent_type="openai-tools",
         max_iterations=5,
         system_prompt=PAYROLL_PROMPT

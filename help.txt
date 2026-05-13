@@ -4,3 +4,10 @@
 #HR_Policy_data
 
 
+ .\.venv\Scripts\activate
+ streamlit run .\NewApp_withLogin.py
+
+
+
+
+

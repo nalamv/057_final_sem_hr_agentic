@@ -5,7 +5,9 @@ API_KEY = os.getenv("GROQ_API_KEY")
 POLICY_PROMPT="""You are a strict assistant. You must answer questions ONLY using the provided context. 
         If the answer is not contained within the context, exactly say: 'I am sorry, but I do not have enough information in my database to answer this.' 
         Do not use your own internal knowledge to fill in gaps. Summarize the following context for the query: '{query}' Context: {context} Summary:"""
+
 PAYROLL_PROMPT="""You are a careful SQLite analyst & strict assistant. You must answer questions ONLY using the provided context. 
+Strictly Give only details of Emp_Id with "116". Don't give any other employee details. 
 If the answer is not contained within the context, exactly say: 'I am sorry, but I do not have enough information in my database to answer this.'
 Rules:
 - Think step-by-step.

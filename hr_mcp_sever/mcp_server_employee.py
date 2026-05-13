@@ -10,7 +10,7 @@ from mcp.server import Server
 from mcp.server.stdio import stdio_server
 from mcp import types
 
-BASE_URL = "http://127.0.0.1:8000"
+BASE_URL = "http://127.0.0.1:9000"
 
 app = Server("employee-role-api-server")
 
@@ -51,7 +51,7 @@ async def list_tools() -> list[types.Tool]:
 async def call_tool(name: str, arguments: dict) -> list[types.TextContent]:
     async with httpx.AsyncClient() as client:
         try:
-           if name == "apply_leave":
+            if name == "apply_leave":  # ← Fixed: removed extra space
                 response = await client.post(
                     f"{BASE_URL}/employee/apply-leave",
                     json={

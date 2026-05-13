@@ -60,6 +60,7 @@ def lms_employee_agent_service(query: str) -> str:
         client = MCPGroqClient()
         await client.connect("hr_mcp_sever/mcp_server_employee.py")
         response = await client.chat(query)
+        print(response)
         await client.close()  # Add this if MCPGroqClient supports cleanup
         return response
 

@@ -2,7 +2,7 @@ from mcp.server.fastmcp import FastMCP
 import httpx
 
 mcp = FastMCP("EmployeeManager")
-BASE_URL = "http://127.0.0.1:8000"
+BASE_URL = "http://localhost:9000"
 
 @mcp.tool()
 async def register_employee(name: str, email: str, department: str, manager_id: int) -> str:
@@ -27,6 +27,7 @@ async def apply_leave(employee_id: int, leave_type: str, start_date: str, end_da
 async def get_employee_leaves(emp_id: int) -> str:
     """Retrieves all leave records for a specific employee ID."""
     async with httpx.AsyncClient() as client:
+        print(f"*******Get Employee {emp_id} Leave Records")
         res = await client.get(f"{BASE_URL}/employee/{emp_id}/leaves")
         return res.text
 

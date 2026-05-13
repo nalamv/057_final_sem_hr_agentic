@@ -52,7 +52,7 @@ class MCPGroqClient_Employee:
 
     # ── Connect to MCP server via stdio ──────────────────────────────────
     async def connect(self, server_script: str = "mcp_server_employee.py"):
-        print(f'Connecting to employee mcp tools....')
+        print(f'Connecting to mcp employee tools {server_script} ....')
         server_params = StdioServerParameters(
             command=sys.executable,
             args=[server_script],

@@ -31,8 +31,7 @@ def lms_manager_agent_service(query: str) -> str:
 def lms_employee_agent_service(query: str) -> str:
     """employee leave management queries: apply for leave, check leave balance, etc
    this agent supports for apply_leave and get_employee_leaves functionality only."""
-    print("---Calling Employee specific MCP tools---")
-
+    print("---Calling Employee specific MCP Service---")
     async def run_chat():
         client = MCPGroqClient_Employee()
         try:
