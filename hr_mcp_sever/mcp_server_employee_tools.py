@@ -38,5 +38,47 @@ async def list_all_employees() -> str:
         res = await client.get(f"{BASE_URL}/employee/all")
         return res.text
 
+@mcp.tool()
+async def get_pending_leaves(manager_id: int) -> str:
+    """Retrieves all pending leave requests for a specific manager."""
+    async with httpx.AsyncClient() as client:
+        res = await client.get(f"{BASE_URL}/manager/{manager_id}/pending-leaves")
+        return res.text
+
+@mcp.tool()
+async def manage_leave_action(leave_id: int, manager_id: int, status: str) -> str:
+    """Updates the status of a leave request. Status can be 'approved', 'rejected', 'pending', etc."""
+    payload = {"status": status}
+    async with httpx.AsyncClient() as client:
+        res = await client.put(
+            f"{BASE_URL}/manager/leave/{leave_id}/action",
+            json=payload,
+            params={"manager_id": manager_id}
+        )
+        return res.text
+
+@mcp.tool()
+async def get_payroll_employee(employee_name: str, employee_id: int) -> str:
+    """Retrieves payroll information for an employee by name and employee ID."""
+    async with httpx.AsyncClient() as client:
+        headers = {"employee-id": str(employee_id)}
+        res = await client.get(
+            f"{BASE_URL}/payroll/employee",
+            params={"employee_name": employee_name},
+            headers=headers
+        )
+        return res.text
+
+@mcp.tool()
+async def get_manager_employees(manager_id: int, manager_name: str) -> str:
+    """Fetches all employees under a specific manager with payroll information."""
+    async with httpx.AsyncClient() as client:
+        res = await client.get(
+            f"{BASE_URL}/payroll/manager/employees",
+            params={"manager_id": manager_id, "manager_name": manager_name}
+        )
+        return res.text
+
+
 if __name__ == "__main__":
     mcp.run()
