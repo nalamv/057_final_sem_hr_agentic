@@ -15,7 +15,7 @@ GROK_MODEL_NAME = "grok-ai/gpt-oss-20b"
 
 # Initialize the LLM client, configured for your Grok AI endpoint
 try:
-    groq_api_key = "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"
+    groq_api_key = ""
     llm = ChatGroq(groq_api_key=groq_api_key, model_name="openai/gpt-oss-20b")
     # llm = ChatOpenAI(
     #     model=GROK_MODEL_NAME,

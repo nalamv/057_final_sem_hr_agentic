@@ -17,7 +17,7 @@ class RAGSearch:
             self.vectorstore.build_from_documents(docs)
         else:
             self.vectorstore.load()
-        groq_api_key = "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"
+        groq_api_key = ""
         self.llm = ChatGroq(groq_api_key=groq_api_key, model_name=llm_model)
         print(f"[INFO] Groq LLM initialized: {llm_model}")
 

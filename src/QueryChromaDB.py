@@ -28,7 +28,7 @@ print("-" * 20)
 
 
 llm_model="openai/gpt-oss-20b"
-groq_api_key = "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"
+groq_api_key = ""
 llm = ChatGroq(groq_api_key=groq_api_key, model_name=llm_model)
 print(f"[INFO] Groq LLM initialized: {llm_model}")
 
