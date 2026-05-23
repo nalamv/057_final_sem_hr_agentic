@@ -2,7 +2,7 @@ from mcp.server.fastmcp import FastMCP
 import httpx
 
 mcp = FastMCP("EmployeeManager")
-BASE_URL = "http://localhost:9000"
+BASE_URL = "http://localhost:8000"
 
 @mcp.tool()
 async def register_employee(name: str, email: str, department: str, manager_id: int) -> str:

@@ -37,41 +37,41 @@ def get_payroll_details(query: str) -> str:
     #return PayrollAgent.pay_roll_answers(query)
     return NewPayrollAgent.payroll_agent(query,employee_id)
 
-@tool
-def lms_manager_agent_service(query: str) -> str:
-    """employee leave management queries: apply for leave, check leave balance, cancel leave, etc
-    if user asks about thel list of the employees from Leave management system, LMS also should call this agent."""
-    print("---Calling MCPGroqClient for LMS query---")
-
-    async def run_chat():
-        client = MCPGroqClient()
-        await client.connect("hr_mcp_sever/mcp_server.py")
-        response = await client.chat(query)
-        await client.close()  # Add this if MCPGroqClient supports cleanup
-        return response
-
-    return asyncio.run(run_chat())
-
-@tool
-def lms_employee_agent_service(query: str) -> str:
-    """employee leave management queries: apply for leave, check leave balance, etc
-   this agent supports for apply_leave and get_employee_leaves functionality only."""
-    print("---Calling Employee specific MCP tools---")
-
-    async def run_chat():
-        client = MCPGroqClient()
-        await client.connect("hr_mcp_sever/mcp_server_employee.py")
-        response = await client.chat(query)
-        print(response)
-        await client.close()  # Add this if MCPGroqClient supports cleanup
-        return response
-
-    return asyncio.run(run_chat())
+# @tool
+# def lms_manager_agent_service(query: str) -> str:
+#     """employee leave management queries: apply for leave, check leave balance, cancel leave, etc
+#     if user asks about thel list of the employees from Leave management system, LMS also should call this agent."""
+#     print("---Calling MCPGroqClient for LMS query---")
+#
+#     async def run_chat():
+#         client = MCPGroqClient()
+#         await client.connect("hr_mcp_sever/mcp_server.py")
+#         response = await client.chat(query)
+#         await client.close()  # Add this if MCPGroqClient supports cleanup
+#         return response
+#
+#     return asyncio.run(run_chat())
+#
+# @tool
+# def lms_employee_agent_service(query: str) -> str:
+#     """employee leave management queries: apply for leave, check leave balance, etc
+#    this agent supports for apply_leave and get_employee_leaves functionality only."""
+#     print("---Calling Employee specific MCP tools---")
+#
+#     async def run_chat():
+#         client = MCPGroqClient()
+#         await client.connect("hr_mcp_sever/mcp_server_employee.py")
+#         response = await client.chat(query)
+#         print(response)
+#         await client.close()  # Add this if MCPGroqClient supports cleanup
+#         return response
+#
+#     return asyncio.run(run_chat())
 @tool
 def lms_agent_service(query: str) -> str:
     """employee leave management queries: apply for leave, check leave balance, cancel leave, approve leave get employee list from LMS  etc
    """
-    return lms_agent(query,employee_type)
+    return lms_agent(query,employee_type,employee_id)
 
 # ----- LLM -----
 if not API_KEY:
@@ -82,7 +82,8 @@ supervisor_agent = create_agent(
     llm,
     tools=[hr_policies, get_payroll_details, hr_holidays, lms_agent_service, hr_tax_benefits],
     #debug=True,
-    system_prompt="You are a helpful assistant. you should provide answers using given tools only. Be concise and accurate."
+    system_prompt=(f"You are a helpful assistant. you should provide answers using given tools only. Be concise and accurate. Your current role is {employee_type} and employee id is {employee_id}. "
+                  f"You have capability to answer the questions related to HR policies, payroll details, holidays, tax benefits and leave management system.")
 )
 chat_history: list = []
 

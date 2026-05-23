@@ -10,7 +10,7 @@ from mcp.server import Server
 from mcp.server.stdio import stdio_server
 from mcp import types
 
-BASE_URL = "http://127.0.0.1:9000"
+BASE_URL = "http://127.0.0.1:8000"
 
 app = Server("employee-role-api-server")
 

@@ -10,7 +10,7 @@ from mcp.server import Server
 from mcp.server.stdio import stdio_server
 from mcp import types
 
-BASE_URL = "http://127.0.0.1:9000"
+BASE_URL = "http://127.0.0.1:8000"
 
 app = Server("employee-api-server")
 
@@ -67,6 +67,20 @@ async def list_tools() -> list[types.Tool]:
                 "required": [],
             },
         ),
+        types.Tool(
+            name="manage_leave_action",
+            description="Updates the status of a leave request",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "leave_id": {"type": "integer", "description": "ID of the leave request"},
+                    "manager_id": {"type": "integer", "description": "ID of the manager"},
+                    "status": {"type": "string",
+                               "description": "New status for the leave (e.g., 'approved', 'rejected', 'pending')"},
+                },
+                "required": ["leave_id", "manager_id", "status"],
+            },
+        ),
     ]
 
 
@@ -108,6 +122,13 @@ async def call_tool(name: str, arguments: dict) -> list[types.TextContent]:
                 response = await client.get(f"{BASE_URL}/employee/all")
                 result = response.json()
 
+            elif name == "manage_leave_action":
+                response = await client.put(
+                    f"{BASE_URL}/manager/leave/{arguments['leave_id']}/action",
+                    json={"status": arguments["status"]},
+                    params={"manager_id": arguments["manager_id"]},
+                )
+                result = response.json()
             else:
                 result = {"error": f"Unknown tool: {name}"}
 

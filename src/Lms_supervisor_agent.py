@@ -41,19 +41,29 @@ def lms_employee_agent_service(query: str) -> str:
             await client.close()  # Add this if MCPGroqClient supports cleanup
     return asyncio.run(run_chat())
 
-def lms_agent(query,emp_type):
+def lms_agent(query,emp_type,employee_id=None):
     try:
         llm = ChatGroq(groq_api_key=API_KEY, model_name=LLM_MODEL)
-        print(f"Employee Type:{emp_type}")
+        print(f"Employee Type:{emp_type}, Employee Id: {employee_id}")
+        agent_prompt=None
         if emp_type == "employee":
-            tools=[lms_employee_agent_service]
+            tools = [lms_employee_agent_service]
+            agent_prompt = (
+                "You are a helpful assistant for employee leave management system. you should provide answers using given tools only. "
+                "Be concise and accurate. You can assist employees for applying leave and checking their leave balance. "
+                f"Employee id is {employee_id}")
         else:
-            tools=[lms_manager_agent_service]
+            tools = [lms_manager_agent_service]
+            agent_prompt = (
+                f"You are a helpful assistant for manager in leave management system. you should provide answers using given tools only. "
+                "Be concise and accurate. You can assist manager for applying leave, checking leave balance, cancelling leave, approving leave and get employee list from LMS etc. "
+                "If user asked about any employee related questions without providing employee id then, you have to call 'get_all_employees' tool and get employee id first before providing the answer. "
+                f"Manager Id is {employee_id}")
         supervisor_agent = create_agent(
             llm,
             tools=tools,
-            # debug=True,
-            system_prompt="You are a helpful assistant. you should provide answers using given tools only. Be concise and accurate."
+            debug=True,
+            system_prompt=agent_prompt
         )
         response = supervisor_agent.invoke({"messages": query})
         return response

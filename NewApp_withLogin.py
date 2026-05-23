@@ -97,7 +97,7 @@ else:
             st.rerun()
 
     # --- MAIN CHAT INTERFACE ---
-    st.title(":blue[CITY Hospital - HR AI Assistant ]")
+    st.title(":blue[VNIT Health Care Employee Portal  (AI Assistant) ]")
     st.caption("Assisting hospital staff with HR and Policy inquiries.")
 
     # Display existing messages
