@@ -1,13 +1,17 @@
+import warnings
+warnings.filterwarnings("ignore", module="transformers")
+
 import time
 import streamlit as st
 from langchain_core.messages import SystemMessage
 
 from MyStreamlitConfig import CSS_STYLE
-from src import Streamlit_Agent
+#from src import Streamlit_Agent
 from src.Streamlit_Agent import employee_type
-
+from src import agent_langgraph as Streamlit_Agent  # ← CHANGED: Use LangGraph version
+from src.agent_langgraph import employee_type
 # --- 1. PAGE CONFIGURATION ---
-st.set_page_config(page_title="HR AI Agent | CITY Hospital", page_icon="🏥", layout="wide")
+st.set_page_config(page_title="HR AI Agent | VNIT Health Care Nagpur", page_icon="🏥", layout="wide")
 
 # Apply Custom CSS
 st.markdown(CSS_STYLE, unsafe_allow_html=True)
@@ -16,7 +20,7 @@ employee_type=None
 # --- 2. AUTHENTICATION LOGIC ---
 def login_page():
     """Displays a simple login form."""
-    st.markdown("<h1 style='text-align: center;'>🏥CITY Hospital Staff Portal</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'>🏥VNIT Health Care Employee Portal</h1>", unsafe_allow_html=True)
 
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
@@ -28,18 +32,24 @@ def login_page():
 
             if submit:
                 # Replace these with your actual validation logic or database check
-                if username == "user001" and password == "password":
+                if username.startswith("emp"):
+                    # Extract employee_id (everything after "emp" prefix)
+                    employee_id = username[3:]  # Remove "emp" prefix
                     st.session_state.user_role = "employee"
+                    st.session_state.employee_id = employee_id
                     st.session_state.logged_in = True
-                    st.success("Logged in successfully!")
+                    st.success(f"Logged in successfully as Employee {employee_id}!")
                     st.rerun()
-                elif username == "manager001" and password == "password":
+                elif username.startswith("super"):
+                    # Extract employee_id (everything after "super" prefix)
+                    employee_id = username[5:]  # Remove "super" prefix
                     st.session_state.user_role = "manager"
+                    st.session_state.employee_id = employee_id
                     st.session_state.logged_in = True
-                    st.success("Logged in successfully!")
+                    st.success(f"Logged in successfully as Manager {employee_id}!")
                     st.rerun()
                 else:
-                     st.error("Invalid Username or Password")
+                    st.error("Invalid Username or Password. Use 'emp<id>' for employees or 'super<id>' for managers.")
 
 def logout():
     """Clears the session state and returns to login."""
@@ -54,9 +64,10 @@ if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
 if "user_role" not in st.session_state:
     st.session_state.user_role = None  # Initialize role
+if "employee_id" not in st.session_state:
+    st.session_state.employee_id = None
 if "messages" not in st.session_state:
     st.session_state.messages = []
-
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
@@ -106,6 +117,7 @@ else:
             with st.spinner("Analyzing hospital database..."):
                 try:
                     Streamlit_Agent.write_employee_type(st.session_state.user_role)
+                    Streamlit_Agent.write_employee_id(st.session_state.employee_id)
                     response, updated_history = Streamlit_Agent.run_repl(prompt, st.session_state.chat_history)
                     st.session_state.chat_history = updated_history
                     st.markdown(response)

@@ -6,12 +6,13 @@ from langchain_core.messages import HumanMessage
 from langchain_groq import ChatGroq
 
 from hr_mcp_sever.mcp_client import MCPGroqClient
-from src import PolicyAgent, PayrollAgent, HolidayAgent, TaxInfoAgent
+from src import PolicyAgent, PayrollAgent, HolidayAgent, TaxInfoAgent, NewPayrollAgent
 from src.constants import API_KEY, LLM_MODEL
 from hr_mcp_sever import mcp_client
 from src.Lms_supervisor_agent import lms_agent
 
 employee_type=None
+employee_id=None
 # ----- tools -----
 @tool
 def hr_policies(query: str) -> str:
@@ -33,7 +34,8 @@ def hr_tax_benefits(query: str) -> str:
 def get_payroll_details(query: str) -> str:
     """employee payroll queries: net amount, leaves, deductions, personal details etc. It can also assist for any questions related to employee records
     You can pick payroll agent if user asked about any father details or department, designation, pay and present days"""
-    return PayrollAgent.pay_roll_answers(query)
+    #return PayrollAgent.pay_roll_answers(query)
+    return NewPayrollAgent.payroll_agent(query,employee_id)
 
 @tool
 def lms_manager_agent_service(query: str) -> str:
@@ -127,3 +129,9 @@ def write_employee_type(emp_type):
     global employee_type
     employee_type = emp_type
     print(f"DEBUG: Streamlit_Agent.employee_type set to: {employee_type}")
+
+def write_employee_id(emp_id):
+    """Set the employee ID at runtime"""
+    global employee_id
+    employee_id = emp_id
+    print(f"DEBUG: Streamlit_Agent.employee_id set to: {employee_id}")
