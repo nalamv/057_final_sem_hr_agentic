@@ -1,0 +1,82 @@
+[
+  {
+    "question": "How many Privilege Leave days are employees entitled to per annum?",
+    "expected_answer": "Employees are entitled to 22 Privilege Leave days per annum.",
+    "category": "Happy Path"
+  },
+  {
+    "question": "Can employees carry forward unused Privilege Leave?",
+    "expected_answer": "Yes, employees can carry forward all of their unused Privilege Leave to the succeeding year, provided the total does not exceed 90 days.",
+    "category": "Happy Path"
+  },
+  {
+    "question": "What is the entitlement for Bereavement Leave?",
+    "expected_answer": "Employees are entitled to 5 days of Bereavement Leave.",
+    "category": "Happy Path"
+  },
+  {
+    "question": "How many days of Paternity Leave are employees entitled to per annum?",
+    "expected_answer": "Employees are entitled to 20 working days of Paternity Leave per annum.",
+    "category": "Happy Path"
+  },
+  {
+    "question": "What happens to Casual/Sick Leave that is not used by the end of the year?",
+    "expected_answer": "Unused Casual/Sick Leave will lapse by the end of the year.",
+    "category": "Happy Path"
+  },
+  {
+    "question": "If an employee has remaining casual or sick leave and applies for bereavement leave due to the death of an immediate family member, will the bereavement days be counted separately from their casual/sick leave entitlements?",
+    "expected_answer": "Yes, bereavement leave is separate and will be availed without affecting casual or sick leave entitlements.",
+    "category": "Edge Case"
+  },
+  {
+    "question": "What happens if an employee applies for a leave that extends beyond the prorated leave entitlement due to them joining after January 1st?",
+    "expected_answer": "The employee cannot apply for leave exceeding the prorated entitlement. The leave request will need adjustment or will be denied.",
+    "category": "Edge Case"
+  },
+  {
+    "question": "If an employee's relocation leave request is not approved within 60 days, what action does the system take?",
+    "expected_answer": "The relocation leave request will be auto-approved if not explicitly denied or approved within 60 days.",
+    "category": "Edge Case"
+  },
+  {
+    "question": "Can an employee apply for privilege leave that exceeds their current accumulated leave balance, assuming they'll accrue enough leave by the time of the leave dates?",
+    "expected_answer": "No, employees can only apply for privilege leave equal to their current accumulated balance at the time of application.",
+    "category": "Edge Case"
+  },
+  {
+    "question": "An employee with more than one month of Loss of Pay (LOP) wants to carry forward their unused privilege leave. How is this affected?",
+    "expected_answer": "An employee with LOP exceeding one month will not accrue new privilege leave for that period, but can carry forward any previously accumulated unused privilege leave, subject to the 90-day carry forward limit.",
+    "category": "Edge Case"
+  },
+  {
+    "question": "What happens if an employee applies for leave that exceeds the 45-day limit without prior approval?",
+    "expected_answer": "The HR system will not allow employees to apply for leaves if the date of leave availed is more than 45 days. The employee needs to provide line manager email approval to update the leave adjustments from the backend in the system.",
+    "category": "Negative/Safety"
+  },
+  {
+    "question": "What are the consequences if an employee fails to apply for leave online?",
+    "expected_answer": "All leave requests must be applied online and approved by Line Managers. Failure to do so means the leave won't be formally recorded or approved within the HR system, potentially impacting the employee's leave balance or pay.",
+    "category": "Negative/Safety"
+  },
+  {
+    "question": "What will occur if a leave request remains unapproved 60 days after application?",
+    "expected_answer": "All leaves not approved within 60 days of the leave application will get auto-approved in the system, ensuring no leave request goes unattended indefinitely.",
+    "category": "Negative/Safety"
+  },
+  {
+    "question": "What is the protocol for applying for Loss of Pay (LOP) leave?",
+    "expected_answer": "Approval for Loss of Pay Leave requires prior consent and approval from both HR and the Line Manager. Without such approval, the leave cannot be granted, and the application may be rejected.",
+    "category": "Negative/Safety"
+  },
+  {
+    "question": "What might happen if a Line Manager fails to approve exceptional leave requests through the proper channels?",
+    "expected_answer": "Line Managers must ensure all Exceptional Approval Requests are approved by the Department Head and HR. Failure to do so could result in the leave not being recorded correctly, possibly leading to issues with leave balances or employee dissatisfaction.",
+    "category": "Negative/Safety"
+  },
+  {
+    "question": "Are contract employees eligible for Privilege Leave as mentioned in the policy?",
+    "expected_answer": "No, contract employees are not covered under this policy according to its terms. They are governed by the terms of their individual contracts.",
+    "category": "Ambiguous"
+  }
+]

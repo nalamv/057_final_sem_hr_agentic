@@ -1,0 +1,44 @@
+Project Context:
+1. This project is specific to HR Agentic chat bot which can supports for real time HR problem like solving the employees queries related to Payroll, Tax Exemption rules and Holidays. It uses the RAG model for this.
+2. And also chatbot supports for the Payroll queries using the MCP server client where It can connect the real time payroll related APIs and retrieve the payroll information of the asked queries. these payroll apis can be defined as MCP tools.
+3. And also chatbot Supports for the Leave management system to apply the leaves and approve the leaves by manager by interacting the Leave management system APIs as MCP server and client modal. all LMS functionalities are defined as @mcp.tools for the agent.
+
+
+In the policy agent we have functionalities like Company policies, Tax exemption policies and Holiday information.
+In the Payroll agent we are using mcp tools like fetching the employee salary based on the employee id, and manager can see the all employees info based on the manager id.
+In the Leave management we have different mcp tools like apply leave, fetch applied leaves, manager approval leave, get all manager under employees leaves..etc
+
+
+
+Expected Project Output: Employees or Managers can login into the application.
+Conditions:
+1. payroll Agent should give the Logged in employee related payroll information only. But when manager logged in, he can see the his employees payroll related information.
+2. LMS Agent: Employee can apply the leave and can see the leave balance, Can see the applied leaves. Manager can Approve the leaves and see all his employees related leaves.
+3. Policy Agents, tax Exemption agents can provide any information related to asked questions.
+
+
+Attached : payroll info, tax exemption rules, holiday policy and other policy for just reference.
+
+
+So please generate the thesis document with following conditions.
+Generate document with required model related formulas.
+Generate related images based on the flow.
+Generate the document with sections like,
+1.Introduction,
+2.Literature Review,
+3.Dataset Construction and Taxonomy,
+4.Methodology,
+5.System Architecture,
+6.Experiments and Results,
+7.Explanbility,
+8.Conclusion and Future work
+
+Documentation rules:
+Paper size A 4, Margins: Top 1, Bottom 1.25, Left 1.5, Right 0.8 (inches)
+Page Nos. Bottom centre, Text Spacing 1.5
+Chapter & chapter title 16 Bold Upper case
+Section & section title 14 Bold Title case
+Sub-section & Sub-section title 12 Bold Title case
+Title of Figures 12 Bold Bottom of the Figure, Title case
+Title of Tables 12 Bold Top of the Table, Title case
+Other Text 12
