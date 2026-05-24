@@ -52,6 +52,7 @@ def lms_agent(query,emp_type,employee_id=None):
                 "You are a helpful assistant for employee leave management system. you should provide answers using given tools only. "
                 "Be concise and accurate. You can assist employees for applying leave and checking their leave balance. "
                 f"Employee id is {employee_id}")
+            print("Employee Agent Prompt: ", agent_prompt)
         else:
             tools = [lms_manager_agent_service]
             agent_prompt = (
@@ -59,6 +60,7 @@ def lms_agent(query,emp_type,employee_id=None):
                 "Be concise and accurate. You can assist manager for applying leave, checking leave balance, cancelling leave, approving leave and get employee list from LMS etc. "
                 "If user asked about any employee related questions without providing employee id then, you have to call 'get_all_employees' tool and get employee id first before providing the answer. "
                 f"Manager Id is {employee_id}")
+            print("Manager Agent Prompt: ", agent_prompt)
         supervisor_agent = create_agent(
             llm,
             tools=tools,
@@ -66,6 +68,7 @@ def lms_agent(query,emp_type,employee_id=None):
             system_prompt=agent_prompt
         )
         response = supervisor_agent.invoke({"messages": query})
+        print(f"Leave Management System Agent Response: {response}")
         return response
     except Exception as e:
         print(e)

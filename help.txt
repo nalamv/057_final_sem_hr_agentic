@@ -7,8 +7,6 @@
 
 #Swagger Endpoint: http://127.0.0.1:8000/docs#/
 
-
-
  .\.venv\Scripts\activate
  streamlit run .\NewApp_withLogin.py
 

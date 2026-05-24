@@ -51,8 +51,7 @@ def get_payroll_details(query: str) -> str:
 @tool
 def lms_agent_service(query: str) -> str:
     """employee leave management queries: apply for leave, check leave balance, cancel leave, approve leave get employee list from LMS etc"""
-    return lms_agent(query, employee_type)
-
+    return lms_agent(query, employee_type,employee_id)
 
 # Create tools list
 tools = [hr_policies, hr_holidays, hr_tax_benefits, get_payroll_details, lms_agent_service]
@@ -67,6 +66,7 @@ SYSTEM_PROMPT = (
     "Answer concisely and accurately. If you cannot answer, say so and explain what tool/data is missing."
     "You are allowed to use payroll, policy, holiday, tax info and lms tools to answer employee queries. Always use the tools when relevant information is needed to answer employee queries. Do not make up information that can be obtained from the tools. Always use the tools when relevant information is needed to answer employee queries. Do not make up information that can be obtained from the tools."
     "Whenever required you can use Payroll tool for any Employee Tax calculations"
+    f"Your Employee Type: {employee_type} and Employee Id: {employee_id}"
 )
 
 
@@ -192,7 +192,7 @@ graph = workflow.compile()
 
 
 # ----- Main interaction function -----
-def run_repl(user_input: str, chat_history: list) -> tuple[str, list]:
+def run_repl(user_input: str, chat_history: list,emp_id:str, emp_type:str) -> tuple[str, list]:
     """Run the agent with LangGraph"""
     if not user_input:
         return "", chat_history
@@ -207,6 +207,8 @@ def run_repl(user_input: str, chat_history: list) -> tuple[str, list]:
         # Initialize state
         initial_state = {
             "messages": messages,
+            "employee_id": emp_id,
+            "employee_type": emp_type,
             "final_response": ""
         }
 

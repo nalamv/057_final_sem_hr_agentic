@@ -53,7 +53,7 @@ async def manage_leave_action(leave_id: int, manager_id: int, status: str) -> st
         res = await client.put(
             f"{BASE_URL}/manager/leave/{leave_id}/action",
             json=payload,
-            params={"manager_id": manager_id}
+            params={"manager_id": 2}
         )
         return res.text
 
